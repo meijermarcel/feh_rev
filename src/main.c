@@ -57,6 +57,7 @@ int main(int argc, char **argv)
 
 	feh_event_init();
 
+	
 	if (opt.index)
 		init_index_mode();
 	else if (opt.multiwindow)
@@ -74,14 +75,14 @@ int main(int argc, char **argv)
 		exit(0);
 	}
 	else if (opt.display){
-		/* Slideshow mode is the default. Because it's spiffy */
-		opt.slideshow = 1;
-		init_slideshow_mode();
+	//  Slideshow mode is the default. Because it's spiffy 
+	        opt.slideshow = 1;
+	  	init_slideshow_mode();
 	}
 	else {
 		eprintf("Invalid option combination");
 	}
-
+	
 	/* main event loop */
 	while (feh_main_iteration(1));
 
@@ -101,6 +102,8 @@ int feh_main_iteration(int block)
 	int count = 0;
 	double t1 = 0.0, t2 = 0.0;
 	fehtimer ft;
+	static int currentIndex = -1;
+	static int prevIndex = -1;
 
 	if (window_num == 0 || sig_exit != 0)
 		return(0);
@@ -109,7 +112,8 @@ int feh_main_iteration(int block)
 		/* Only need to set these up the first time */
 		xfd = ConnectionNumber(disp);
 		fdsize = xfd + 1;
-		pt = feh_get_time();
+		//pt = feh_get_time();
+		prevIndex = opt.initial_index;
 		first = 0;
 		/*
 		 * Only accept commands from stdin if
@@ -126,10 +130,20 @@ int feh_main_iteration(int block)
 		}
 	}
 
-	/* Timers */
-	t1 = feh_get_time();
-	t2 = t1 - pt;
-	pt = t1;
+	currentIndex = feh_get_pic_index(opt.interval,opt.pic_count);
+
+	if (currentIndex != prevIndex) {
+	  //change picture
+	  printf("prevIndex: %d currentIndex: %d\n",prevIndex,currentIndex);
+	  slideshow_change_image_by_index(opt.w_data, currentIndex);
+	}
+
+	prevIndex = currentIndex;
+
+	
+	//t1 = feh_get_time();
+	//t2 = t1 - pt;
+	//pt = t1;
 	while (XPending(disp)) {
 		XNextEvent(disp, &ev);
 		if (ev_handler[ev.type])
@@ -148,8 +162,9 @@ int feh_main_iteration(int block)
 		FD_SET(STDIN_FILENO, &fdset);
 
 	/* Timers */
-	ft = first_timer;
+	//ft = first_timer;
 	/* Don't do timers if we're zooming/panning/etc or if we are paused */
+	/*
 	if (ft && (opt.mode == MODE_NORMAL) && !opt.paused) {
 		D(("There are timers in the queue\n"));
 		if (ft->just_added) {
@@ -168,7 +183,7 @@ int feh_main_iteration(int block)
 		XSync(disp, False);
 		D(("I next need to action a timer in %f seconds\n", t1));
 		/* Only do a blocking select if there's a timer due, or no events
-		   waiting */
+		   waiting 
 		if (t1 == 0.0 || (block && !XPending(disp))) {
 			tval.tv_sec = (long) t1;
 			tval.tv_usec = (long) ((t1 - ((double) tval.tv_sec)) * 1000000);
@@ -186,14 +201,14 @@ int feh_main_iteration(int block)
 			if (count == 0) {
 				/* This means the timer is due to be executed. If count was > 0,
 				   that would mean an X event had woken us, we're not interested
-				   in that */
+				   in that 
 				feh_handle_timer();
 			}
 			else if ((count > 0) && (FD_ISSET(0, &fdset)))
 				feh_event_handle_stdin();
 		}
 	} else {
-		/* Don't block if there are events in the queue. That's a bit rude ;-) */
+		/* Don't block if there are events in the queue. That's a bit rude ;-) 
 		if (block && !XPending(disp)) {
 			errno = 0;
 			D(("Performing blocking select - no timers, or zooming\n"));
@@ -206,6 +221,7 @@ int feh_main_iteration(int block)
 				feh_event_handle_stdin();
 		}
 	}
+	*/
 	if (window_num == 0 || sig_exit != 0)
 		return(0);
 	

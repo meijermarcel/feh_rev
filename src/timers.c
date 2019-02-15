@@ -50,6 +50,24 @@ void feh_handle_timer(void)
 	return;
 }
 
+int feh_get_pic_index(double interval, int numPics)
+{
+  int index = 0;
+  struct tm *tm;
+  time_t now;
+
+  now = time(0);
+  tm = localtime(&now);
+  int time_sec = tm->tm_sec;
+
+  // get to closest interval
+  int currentInterval = time_sec - (time_sec % (int)interval);
+  int intervalIndex = floor(currentInterval/interval);
+  index = intervalIndex % numPics;
+  
+  return index;
+}
+
 double feh_get_time(void)
 {
 	struct timeval timev;

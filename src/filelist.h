@@ -47,6 +47,7 @@ struct __feh_file_info {
 	int height;
 	int size;
 	int pixels;
+        int time;
 	unsigned char has_alpha;
 	char *format;
 	char *extension;
@@ -90,6 +91,7 @@ void add_file_to_rm_filelist(char *file);
 void delete_rm_files(void);
 gib_list *feh_file_info_preload(gib_list * list);
 int feh_file_info_load(feh_file * file, Imlib_Image im);
+int feh_file_info_load_count(feh_file * file, Imlib_Image im, int time_count);
 void feh_file_dirname(char *dst, feh_file * f, int maxlen);
 void feh_prepare_filelist(void);
 int feh_write_filelist(gib_list * list, char *filename);

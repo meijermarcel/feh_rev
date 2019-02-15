@@ -125,6 +125,10 @@ struct __fehoptions {
 	unsigned char adjust_reload;
 	int xinerama_index;
 
+        int pic_count;
+        double interval;
+        int initial_index;
+        void *w_data;
 	/* signed in case someone wants to invert scrolling real quick */
 	int scroll_step;
 

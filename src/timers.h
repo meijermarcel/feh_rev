@@ -40,6 +40,7 @@ double feh_get_time(void);
 void feh_remove_timer(char *name);
 void feh_add_timer(void (*func) (void *data), void *data, double in, char *name);
 void feh_add_unique_timer(void (*func) (void *data), void *data, double in);
+int feh_get_pic_index(double interval, int numPics);
 
 extern fehtimer first_timer;
 

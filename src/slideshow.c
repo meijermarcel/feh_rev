@@ -30,12 +30,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "winwidget.h"
 #include "options.h"
 #include "signals.h"
+#include <time.h>
+
 
 void init_slideshow_mode(void)
 {
 	winwidget w = NULL;
 	int success = 0;
 	gib_list *l = filelist, *last = NULL;
+	//struct tm *tm;
+	//time_t now;
+
+    
 
 	/*
 	 * In theory, --start-at FILENAME is simple: Look for a file called
@@ -97,6 +103,58 @@ void init_slideshow_mode(void)
 	if (!opt.title)
 		opt.title = PACKAGE " [%u of %l] - %f";
 
+	gib_list *get_start = filelist;
+	//feh_file *file = NULL;
+	//int pic_time = 4 / opt.time_count;
+	int pic_count = 0;
+	for(; get_start; get_start = get_start->next){
+	  // find file to start at based on time intervals
+	  pic_count++;
+	}
+
+	opt.pic_count = pic_count;
+	opt.interval = 15.0;
+	
+
+	//printf("pic_count %d\n",pic_count);
+	//double test_time = feh_get_time();
+	//printf("time: %f\n",test_time);
+	//now = time(0);
+	//tm = localtime(&now);
+	//printf("%d\n",tm->tm_sec);
+	//double interval = 15.0;
+	opt.initial_index = feh_get_pic_index(opt.interval, pic_count);
+	printf("initial_index: %d\n",opt.initial_index);
+	//printf("pic_number: %d\n",pic_number);
+	//int time_sec = tm->tm_sec;
+
+	/*
+	if (time_sec > 14 && time_sec <= 29)
+	  {
+	    pic_number = 1;
+	  }
+	else if (time_sec > 29 && time_sec <= 44)
+	  {
+	    pic_number = 2;
+	  }
+	else if (time_sec > 44)
+	  {
+	    pic_number = 3;
+	  }
+	*/
+
+	
+
+	int start_count = 0;
+	for (l = filelist; l; l = l->next)
+	  {
+	    if (start_count == opt.initial_index)
+	      {
+		break;
+	      }
+	    start_count++;
+	  }
+
 	mode = "slideshow";
 	for (; l; l = l->next) {
 		if (last) {
@@ -107,10 +165,14 @@ void init_slideshow_mode(void)
 		if ((w = winwidget_create_from_file(l, WIN_TYPE_SLIDESHOW)) != NULL) {
 			success = 1;
 			winwidget_show(w);
+			opt.w_data = w;
+			/*
 			if (opt.slideshow_delay > 0.0)
-				feh_add_timer(cb_slide_timer, w, opt.slideshow_delay, "SLIDE_CHANGE");
-			if (opt.reload > 0)
-				feh_add_unique_timer(cb_reload_timer, w, opt.reload);
+			        feh_add_timer(cb_slide_timer, w, 1, "SLIDE_CHANGE");
+			*/
+			//feh_add_timer(cb_slide_timer,w,1,"SLIDE_CHANGE");
+			//if (opt.reload > 0)
+			  //feh_add_unique_timer(cb_reload_timer, w, opt.reload);
 			break;
 		} else {
 			last = l;
@@ -269,8 +331,11 @@ void slideshow_change_image(winwidget winwid, int change, int render)
 	 */
 	int our_filelist_len = filelist_len;
 
+	/*
 	if (opt.slideshow_delay > 0.0)
-		feh_add_timer(cb_slide_timer, winwid, opt.slideshow_delay, "SLIDE_CHANGE");
+		feh_add_timer(cb_slide_timer, winwid, 1, "SLIDE_CHANGE");
+	*/
+	feh_add_timer(cb_slide_timer,winwid,1,"SLIDE_CHANGE");
 
 	/* Without this, clicking a one-image slideshow reloads it. Not very *
 	   intelligent behaviour :-) */
@@ -405,6 +470,59 @@ void slideshow_change_image(winwidget winwid, int change, int render)
 			winwid->im_w = w;
 			winwid->im_h = h;
 			if (render) {
+				winwidget_render_image(winwid, 1, 0);
+			}
+			break;
+		} else
+			last = current_file;
+	}
+	if (last)
+		filelist = feh_file_remove_from_list(filelist, last);
+
+	if (filelist_len == 0)
+		eprintf("No more slides in show");
+
+	return;
+}
+
+void slideshow_change_image_by_index(winwidget winwid, int index)
+{
+	gib_list *last = NULL;
+	gib_list *previous_file = current_file;
+	int i;
+	/* We can't use filelist_len in the for loop, since that changes when we
+	 * encounter invalid images.
+	 */
+	int our_filelist_len = filelist_len;
+
+	/* The for loop prevents us looping infinitely */
+	for (i = 0; i < our_filelist_len; i++) {
+		winwidget_free_image(winwid);
+		current_file = feh_list_jump_to_pic(filelist, current_file, index);
+		printf("hello\n");
+		
+		if (last) {
+			filelist = feh_file_remove_from_list(filelist, last);
+			last = NULL;
+		}
+		
+
+		if (winwidget_loadimage(winwid, FEH_FILE(current_file->data))) {
+			int w = gib_imlib_image_get_width(winwid->im);
+			int h = gib_imlib_image_get_height(winwid->im);
+			if (feh_should_ignore_image(winwid->im)) {
+			  printf("ignored\n");
+				last = current_file;
+				continue;
+			}
+			winwid->mode = MODE_NORMAL;
+			winwid->file = current_file;
+			if ((winwid->im_w != w) || (winwid->im_h != h))
+				winwid->had_resize = 1;
+			winwidget_reset_image(winwid);
+			winwid->im_w = w;
+			winwid->im_h = h;
+			if (index) {
 				winwidget_render_image(winwid, 1, 0);
 			}
 			break;
@@ -729,4 +847,43 @@ gib_list *feh_list_jump(gib_list * root, gib_list * l, int direction, int num)
 		}
 	}
 	return (ret);
+}
+
+gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
+{
+  gib_list *ret = NULL;
+  
+  if (!root)
+    return (NULL);
+  if (!l)
+    return (root);
+
+  ret = root;
+
+  for (int i = 0; i < index; i++) {
+    printf("index: %d\n",i);
+    if (ret->next) {
+      ret = ret->next;
+    }
+    else {
+      ret = root;
+    }
+  }
+
+  if (index == 0) {
+    // need to advance root to first pic
+    printf("zero\n");
+    if (ret->next) {
+      // ret = ret->next;
+    }
+    else {
+      printf("nope\n");
+    }
+  }
+
+  if (ret) {
+    printf("exists\n");
+  }
+
+  return ret;
 }

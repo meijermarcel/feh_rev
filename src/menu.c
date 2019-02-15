@@ -1388,7 +1388,7 @@ static feh_menu *feh_menu_func_gen_info(feh_menu * m)
 	snprintf(buffer, sizeof(buffer), "Filename: %s", file->name);
 	feh_menu_add_entry(mm, buffer, NULL, 0, 0, NULL);
 	if (!file->info)
-		feh_file_info_load(file, im);
+	  feh_file_info_load(file, im);
 	if (file->info) {
 		snprintf(buffer, sizeof(buffer), "Size: %dKb", file->info->size / 1024);
 		feh_menu_add_entry(mm, buffer, NULL, 0, 0, NULL);

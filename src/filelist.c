@@ -311,10 +311,13 @@ gib_list *feh_file_info_preload(gib_list * list)
 	feh_file *file = NULL;
 	gib_list *remove_list = NULL;
 
+	printf("preload\n");
+
+	int time_count = 1;
 	for (l = list; l; l = l->next) {
 		file = FEH_FILE(l->data);
 		D(("file %p, file->next %p, file->name %s\n", l, l->next, file->name));
-		if (feh_file_info_load(file, NULL)) {
+		if (feh_file_info_load_count(file, NULL,time_count)) {
 			D(("Failed to load file %p\n", file));
 			remove_list = gib_list_add_front(remove_list, l);
 			if (opt.verbose)
@@ -332,7 +335,9 @@ gib_list *feh_file_info_preload(gib_list * list)
 			feh_display_status(0);
 			exit(sig_exit);
 		}
+		time_count++;
 	}
+	//opt.time_count = (time_count-1);
 	if (opt.verbose)
 		feh_display_status(0);
 
@@ -347,6 +352,7 @@ gib_list *feh_file_info_preload(gib_list * list)
 
 	return(list);
 }
+
 
 int feh_file_info_load(feh_file * file, Imlib_Image im)
 {
@@ -371,6 +377,51 @@ int feh_file_info_load(feh_file * file, Imlib_Image im)
 		return(1);
 
 	file->info = feh_file_info_new();
+
+	file->info->width = gib_imlib_image_get_width(im1);
+	file->info->height = gib_imlib_image_get_height(im1);
+
+	file->info->has_alpha = gib_imlib_image_has_alpha(im1);
+
+	file->info->pixels = file->info->width * file->info->height;
+
+	file->info->format = estrdup(gib_imlib_image_format(im1));
+
+	file->info->size = st.st_size;
+
+	if (need_free)
+		gib_imlib_free_image_and_decache(im1);
+	return(0);
+}
+
+
+int feh_file_info_load_count(feh_file * file, Imlib_Image im, int time_count)
+{
+	struct stat st;
+	int need_free = 1;
+	Imlib_Image im1;
+
+	D(("im is %p\n", im));
+
+	if (im)
+		need_free = 0;
+
+	errno = 0;
+	if (stat(file->filename, &st)) {
+		feh_print_stat_error(file->filename);
+		return(1);
+	}
+
+	if (im)
+		im1 = im;
+	else if (!feh_load_image(&im1, file) || !im1)
+		return(1);
+
+	file->info = feh_file_info_new();
+
+	file->info->time = time_count;
+
+	printf("load_count\n");
 
 	file->info->width = gib_imlib_image_get_width(im1);
 	file->info->height = gib_imlib_image_get_height(im1);
