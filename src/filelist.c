@@ -32,10 +32,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "filelist.h"
 #include "signals.h"
 #include "options.h"
-#include <vector>
 
 gib_list *filelist = NULL;
-gib_list *fileArray[4];
+gib_list *fileArray[100];
 gib_list *original_file_items = NULL; /* original file items from argv */
 int filelist_len = 0;
 gib_list *current_file = NULL;
@@ -43,7 +42,7 @@ extern int errno;
 
 static gib_list *rm_filelist = NULL;
 static int indexArray = 0;
-static int maxSize = 0;
+static int maxSize = 100;
 
 
 feh_file *feh_file_new(char *filename)
@@ -269,12 +268,7 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 			return;
 		}
 		n = scandir(path, &de, file_selector_all, alphasort);
-		if (maxSize == 0)
-		{
-			maxSize = n;
-			gib_list *tempArray[maxSize];
-			fileArray = tempArray;
-		}
+		
 		printf("n is:: %d\n", n);
 		if (n < 0) {
 			switch (errno) {
