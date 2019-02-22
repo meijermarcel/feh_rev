@@ -25,7 +25,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <time.h>
 #include "gib_list.h"
-#include "filelist.h"
 #include "utils.h"
 #include "debug.h"
 
@@ -143,7 +142,7 @@ gib_list_add_front(gib_list * root, void *data)
    return (l);
 }
 
-gib_list * gib_list_add_array(gib_list * root, void *data, int currIndex)
+gib_list * gib_list_add_array(gib_list * root, void *data, int currIndex, gib_list * mainArray[], int maxSize)
 {
 	gib_list *l;
 
@@ -151,7 +150,7 @@ gib_list * gib_list_add_array(gib_list * root, void *data, int currIndex)
 	l->next = root;
 	l->data = data;
 
-	fileArray[currIndex] = l;
+	mainArray[currIndex] = l;
 	currIndex++;
 	if (currIndex > maxSize)
 	{
@@ -160,9 +159,9 @@ gib_list * gib_list_add_array(gib_list * root, void *data, int currIndex)
 		gib_list *newArray[maxSize];
 		for (int i = 0; i < currIndex; i++)
 		{
-			newArray[i] = fileArray[i];
+			newArray[i] = mainArray[i];
 		}
-		fileArray = newArray;
+		mainArray = newArray;
 	}
 
 	return (l);
