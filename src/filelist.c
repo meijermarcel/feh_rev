@@ -199,6 +199,7 @@ static void add_stdin_to_filelist()
 /* Recursive */
 void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 {
+	/*
 	if (maxSize == 0)
 	{
 		gib_list * tempArray[4];
@@ -208,6 +209,7 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 		fileArray = tempArray;
 		maxSize = 4;
 	}
+	*/
 	struct stat st;
 	char *path;
 
