@@ -225,7 +225,7 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 			return;
 		} else if (opt.filelistfile) {
 			char *newpath = feh_absolute_path(path);
-
+			printf("newpath\n");
 			free(path);
 			path = newpath;
 		}
@@ -244,6 +244,7 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 		int cnt, n;
 
 		D(("It is a directory\n"));
+		printf("it is a directory\n");
 
 		if ((dir = opendir(path)) == NULL) {
 			if (!opt.quiet)
@@ -267,11 +268,14 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 					char *newfile;
 
 					newfile = estrjoin("", path, "/", de[cnt]->d_name, NULL);
-
+					printf("estrjoin\n");
 					/* This ensures we go down one level even if not fully recursive
 					   - this way "feh some_dir" expands to some_dir's contents */
 					if (opt.recursive)
+					{
+						printf("recursive\n");
 						add_file_to_filelist_recursively(newfile, FILELIST_CONTINUE);
+					}
 					else
 						add_file_to_filelist_recursively(newfile, FILELIST_LAST);
 
@@ -284,6 +288,7 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 		closedir(dir);
 	} else if (S_ISREG(st.st_mode)) {
 		D(("Adding regular file %s to filelist\n", path));
+		printf("regular file\n");
 		filelist = gib_list_add_front(filelist, feh_file_new(path));
 	}
 	free(path);
