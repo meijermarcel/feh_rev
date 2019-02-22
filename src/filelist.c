@@ -312,6 +312,8 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 			maxSize *= 2;
 		}
 		printf("index: %d maxSize: %d\n", indexArray, maxSize);
+		int fileSizeArray = sizeof(fileArray) / sizeof(fileArray[0]);
+		printf("size: %d\n", fileSizeArray);
 	}
 	free(path);
 	return;
