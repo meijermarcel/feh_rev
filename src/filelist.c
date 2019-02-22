@@ -34,7 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "options.h"
 
 gib_list *filelist = NULL;
-gib_list *fileArrray[4];
+gib_list *fileArrray[];
 gib_list *original_file_items = NULL; /* original file items from argv */
 int filelist_len = 0;
 gib_list *current_file = NULL;
@@ -42,7 +42,7 @@ extern int errno;
 
 static gib_list *rm_filelist = NULL;
 static int indexArray = 0;
-static int maxSize = 4;
+static int maxSize = 0;
 
 
 feh_file *feh_file_new(char *filename)
@@ -199,6 +199,15 @@ static void add_stdin_to_filelist()
 /* Recursive */
 void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 {
+	if (maxSize == 0)
+	{
+		gib_list * tempArray[4];
+		gib_list *l;
+		l = gib_list_new();
+		tempArray[0] = l;
+		fileArray = tempArray;
+		maxSize = 4;
+	}
 	struct stat st;
 	char *path;
 
