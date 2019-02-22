@@ -533,7 +533,7 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 			winwidget_reset_image(winwid);
 			winwid->im_w = w;
 			winwid->im_h = h;
-			if (index) {
+			if (index >= 0) {
 				winwidget_render_image(winwid, 1, 0);
 				printf("render this image %s\n", FEH_FILE(current_file->data)->filename);
 			}
