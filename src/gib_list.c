@@ -146,6 +146,24 @@ gib_list * gib_list_add_array(gib_list * mainArray[], void *data, int index, int
 {
 	gib_list *l;
 
+	l = gib_list_new();
+	l->next = NULL;
+	l->data = data;
+
+	mainArray[index] = l;
+
+	index++;
+	if (index > maxSize)
+	{
+		maxSize *= 2;
+		gib_list * newArray[maxSize];
+		for (int i = 0; i < index; i++)
+		{
+			newArray[i] = mainArray[i];
+		}
+		mainArray = newArray;
+	}
+
 	return (l);
 }
 
