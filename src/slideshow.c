@@ -511,8 +511,9 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 		
 		
 		if (last) {
-			filelist = feh_file_remove_from_list(filelist, last);
-			last = NULL;
+			//filelist = feh_file_remove_from_list(filelist, last);
+			//last = NULL;
+			printf("last thing\n");
 		}
 		
 
@@ -538,8 +539,8 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 		} else
 			last = current_file;
 	}
-	if (last)
-		filelist = feh_file_remove_from_list(filelist, last);
+	//if (last)
+	//	filelist = feh_file_remove_from_list(filelist, last);
 
 	if (filelist_len == 0)
 		eprintf("No more slides in show");
