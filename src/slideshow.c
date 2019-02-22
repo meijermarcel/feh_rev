@@ -499,7 +499,7 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 	for (i = 0; i < our_filelist_len; i++) {
 		winwidget_free_image(winwid);
 		current_file = feh_list_jump_to_pic(filelist, current_file, index);
-		printf("hello\n");
+		printf("hello!!\n");
 		
 		if (last) {
 			filelist = feh_file_remove_from_list(filelist, last);

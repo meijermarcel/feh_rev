@@ -40,6 +40,7 @@ char *mode = NULL;
 
 int main(int argc, char **argv)
 {
+	//printf("Hello\n");
 	atexit(feh_clean_exit);
 
 	srandom(getpid() * time(NULL) % ((unsigned int) -1));
