@@ -268,6 +268,7 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 			return;
 		}
 		n = scandir(path, &de, file_selector_all, alphasort);
+		printf("n is:: %d\n", n);
 		if (n < 0) {
 			switch (errno) {
 			case ENOMEM:
