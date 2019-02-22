@@ -41,7 +41,7 @@ gib_list *current_file = NULL;
 extern int errno;
 
 static gib_list *rm_filelist = NULL;
-static int index = 0;
+static int indexArray = 0;
 static int maxSize = 4;
 
 
@@ -294,9 +294,9 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 		D(("Adding regular file %s to filelist\n", path));
 		printf("regular file\n");
 		//filelist = gib_list_add_front(filelist, feh_file_new(path));
-		filelist = gib_list_add_array(fileArray, feh_file_new(path), index, maxSize);
-		index++;
-		if (index >= maxSize)
+		filelist = gib_list_add_array(fileArray, feh_file_new(path), indexArray, maxSize);
+		indexArray++;
+		if (indexArray >= maxSize)
 		{
 			maxSize *= 2;
 		}
