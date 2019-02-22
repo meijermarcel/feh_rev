@@ -124,7 +124,7 @@ void init_slideshow_mode(void)
 	//printf("%d\n",tm->tm_sec);
 	//double interval = 15.0;
 	opt.initial_index = feh_get_pic_index(opt.interval, pic_count);
-	printf("initial_index: %d\n",opt.initial_index);
+	//printf("initial_index: %d\n",opt.initial_index);
 	//printf("pic_number: %d\n",pic_number);
 	//int time_sec = tm->tm_sec;
 
@@ -506,23 +506,23 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 		//current_file = fileArray[8];
 		if (index == 0)
 		{
-			printf("hello!!\n");
+			//printf("hello!!\n");
 		}
 		
 		
 		if (last) {
 			//filelist = feh_file_remove_from_list(filelist, last);
 			//last = NULL;
-			printf("last thing\n");
+			//printf("last thing\n");
 		}
 		
 
 		if (winwidget_loadimage(winwid, FEH_FILE(current_file->data))) {
-			printf("render image %s\n",FEH_FILE(current_file->data)->filename);
+			//printf("render image %s\n",FEH_FILE(current_file->data)->filename);
 			int w = gib_imlib_image_get_width(winwid->im);
 			int h = gib_imlib_image_get_height(winwid->im);
 			if (feh_should_ignore_image(winwid->im)) {
-				printf("ignored\n");
+				//printf("ignored\n");
 				last = current_file;
 				continue;
 			}
@@ -535,14 +535,14 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 			winwid->im_h = h;
 			if (index >= 0) {
 				winwidget_render_image(winwid, 1, 0);
-				printf("render this image %s\n", FEH_FILE(current_file->data)->filename);
+				//printf("render this image %s\n", FEH_FILE(current_file->data)->filename);
 			}
 			break;
 		}
 		else
 		{
 			last = current_file;
-			printf("didn't render\n");
+			//printf("didn't render\n");
 		}
 			
 	}
@@ -914,7 +914,7 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
 	if (index == 0)
 	{
 		ret = fileArray[0];
-		printf("its zero\n");
+		//printf("its zero\n");
 	}
 
 	return ret;

@@ -240,7 +240,7 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 			return;
 		} else if (opt.filelistfile) {
 			char *newpath = feh_absolute_path(path);
-			printf("newpath\n");
+			//printf("newpath\n");
 			free(path);
 			path = newpath;
 		}
@@ -259,7 +259,7 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 		int cnt, n;
 
 		D(("It is a directory\n"));
-		printf("it is a directory\n");
+		//printf("it is a directory\n");
 
 		if ((dir = opendir(path)) == NULL) {
 			if (!opt.quiet)
@@ -269,7 +269,7 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 		}
 		n = scandir(path, &de, file_selector_all, alphasort);
 		
-		printf("n is:: %d\n", n);
+		//printf("n is:: %d\n", n);
 		if (n < 0) {
 			switch (errno) {
 			case ENOMEM:
@@ -285,12 +285,12 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 					char *newfile;
 
 					newfile = estrjoin("", path, "/", de[cnt]->d_name, NULL);
-					printf("estrjoin\n");
+					//printf("estrjoin\n");
 					/* This ensures we go down one level even if not fully recursive
 					   - this way "feh some_dir" expands to some_dir's contents */
 					if (opt.recursive)
 					{
-						printf("recursive\n");
+						//printf("recursive\n");
 						add_file_to_filelist_recursively(newfile, FILELIST_CONTINUE);
 					}
 					else
@@ -305,7 +305,7 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 		closedir(dir);
 	} else if (S_ISREG(st.st_mode)) {
 		D(("Adding regular file %s to filelist\n", path));
-		printf("regular file\n");
+		//rintf("regular file\n");
 		//filelist = gib_list_add_front(filelist, feh_file_new(path));
 		filelist = gib_list_add_array(fileArray, feh_file_new(path), indexArray, maxSize, filelist);
 		indexArray++;
@@ -313,9 +313,9 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 		{
 			maxSize *= 2;
 		}
-		printf("index: %d maxSize: %d\n", indexArray, maxSize);
+		//printf("index: %d maxSize: %d\n", indexArray, maxSize);
 		int fileSizeArray = sizeof(fileArray) / sizeof(fileArray[0]);
-		printf("size: %d\n", fileSizeArray);
+		//printf("size: %d\n", fileSizeArray);
 	}
 	free(path);
 	return;
@@ -342,7 +342,7 @@ gib_list *feh_file_info_preload(gib_list * list)
 	feh_file *file = NULL;
 	gib_list *remove_list = NULL;
 
-	printf("preload\n");
+	//printf("preload\n");
 
 	int time_count = 1;
 	for (l = list; l; l = l->next) {
@@ -452,7 +452,7 @@ int feh_file_info_load_count(feh_file * file, Imlib_Image im, int time_count)
 
 	file->info->time = time_count;
 
-	printf("load_count\n");
+	//printf("load_count\n");
 
 	file->info->width = gib_imlib_image_get_width(im1);
 	file->info->height = gib_imlib_image_get_height(im1);

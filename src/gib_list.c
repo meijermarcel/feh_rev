@@ -153,7 +153,7 @@ gib_list * gib_list_add_array(gib_list * mainArray[], void *data, int index, int
 		root->prev = l;
 	
 	mainArray[index] = l;
-	printf("inside index: %d maxSize: %d\n", index, maxSize);
+	//printf("inside index: %d maxSize: %d\n", index, maxSize);
 	index++;
 	if (index >= maxSize)
 	{
