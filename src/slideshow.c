@@ -494,6 +494,7 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 	 * encounter invalid images.
 	 */
 	int our_filelist_len = filelist_len;
+	printf("change image : %d\n", our_filelist_len);
 
 	/* The for loop prevents us looping infinitely */
 	for (i = 0; i < our_filelist_len; i++) {
