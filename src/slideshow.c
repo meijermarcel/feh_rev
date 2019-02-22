@@ -494,14 +494,18 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 	 * encounter invalid images.
 	 */
 	int our_filelist_len = filelist_len;
-	printf("change image : %d\n", our_filelist_len);
+	//printf("change image : %d\n", our_filelist_len);
 
 	/* The for loop prevents us looping infinitely */
 	for (i = 0; i < our_filelist_len; i++) {
 		winwidget_free_image(winwid);
 		current_file = feh_list_jump_to_pic(filelist, current_file, index);
 		//current_file = fileArray[8];
-		printf("hello!!\n");
+		if (index == 0)
+		{
+			printf("hello!!\n");
+		}
+		
 		
 		if (last) {
 			filelist = feh_file_remove_from_list(filelist, last);
