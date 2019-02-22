@@ -900,7 +900,11 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
 {
 	gib_list *ret = NULL;
 	ret = fileArray[index];
-
+	if (index == 0)
+	{
+		ret = fileArray[0];
+		printf("its zero\n");
+	}
 
 	return ret;
 }
