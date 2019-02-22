@@ -144,7 +144,7 @@ void init_slideshow_mode(void)
 	*/
 
 	
-
+	/*
 	int start_count = 0;
 	for (l = filelist; l; l = l->next)
 	  {
@@ -154,6 +154,9 @@ void init_slideshow_mode(void)
 	      }
 	    start_count++;
 	  }
+	*/
+
+	l = fileArray[opt.initial_index];
 
 	mode = "slideshow";
 	for (; l; l = l->next) {
