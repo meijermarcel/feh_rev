@@ -42,7 +42,7 @@ extern int errno;
 
 static gib_list *rm_filelist = NULL;
 static int indexArray = 0;
-static int maxSize = 0;
+static int maxSize = 4;
 
 
 feh_file *feh_file_new(char *filename)
