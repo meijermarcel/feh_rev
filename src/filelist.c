@@ -34,7 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "options.h"
 
 gib_list *filelist = NULL;
-static gib_list *fileArrray[4];
+gib_list *fileArray[4];
 gib_list *original_file_items = NULL; /* original file items from argv */
 int filelist_len = 0;
 gib_list *current_file = NULL;
