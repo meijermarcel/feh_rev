@@ -41,8 +41,6 @@ gib_list *current_file = NULL;
 extern int errno;
 
 static gib_list *rm_filelist = NULL;
-static int maxSize = 4;
-static int arrayIndex = 0;
 
 feh_file *feh_file_new(char *filename)
 {
