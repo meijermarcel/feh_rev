@@ -111,7 +111,7 @@ int feh_cmp_size(void *file1, void *file2);
 int feh_cmp_format(void *file1, void *file2);
 
 extern gib_list *filelist;
-extern gib_list fileArrray[];
+extern gib_list *fileArrray[];
 extern gib_list *original_file_items;
 extern int filelist_len;
 extern gib_list *current_file;
