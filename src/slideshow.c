@@ -522,7 +522,7 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 			int w = gib_imlib_image_get_width(winwid->im);
 			int h = gib_imlib_image_get_height(winwid->im);
 			if (feh_should_ignore_image(winwid->im)) {
-			  printf("ignored\n");
+				printf("ignored\n");
 				last = current_file;
 				continue;
 			}
@@ -535,10 +535,16 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 			winwid->im_h = h;
 			if (index) {
 				winwidget_render_image(winwid, 1, 0);
+				printf("render this image %s\n", FEH_FILE(current_file->data)->filename);
 			}
 			break;
-		} else
+		}
+		else
+		{
 			last = current_file;
+			printf("didn't render\n");
+		}
+			
 	}
 	//if (last)
 	//	filelist = feh_file_remove_from_list(filelist, last);
