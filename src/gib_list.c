@@ -142,6 +142,13 @@ gib_list_add_front(gib_list * root, void *data)
    return (l);
 }
 
+gib_list * gib_list_add_array(gib_list * mainArray[], void *data, int index, int maxSize)
+{
+	gib_list *l;
+
+	return (l);
+}
+
 gib_list *
 gib_list_add_end(gib_list * root, void *data)
 {
