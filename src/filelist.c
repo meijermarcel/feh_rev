@@ -32,6 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "filelist.h"
 #include "signals.h"
 #include "options.h"
+#include <vector>
 
 gib_list *filelist = NULL;
 gib_list *fileArray[4];
