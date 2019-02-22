@@ -42,7 +42,7 @@ extern int errno;
 
 static gib_list *rm_filelist = NULL;
 static int indexArray = 0;
-static int maxSize = 4;
+static int maxSize = 0;
 
 
 feh_file *feh_file_new(char *filename)
@@ -268,6 +268,12 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 			return;
 		}
 		n = scandir(path, &de, file_selector_all, alphasort);
+		if (maxSize == 0)
+		{
+			maxSize = n;
+			gib_list *tempArray[maxSize];
+			fileArray = tempArray;
+		}
 		printf("n is:: %d\n", n);
 		if (n < 0) {
 			switch (errno) {
