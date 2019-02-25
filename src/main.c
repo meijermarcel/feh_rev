@@ -135,7 +135,7 @@ int feh_main_iteration(int block)
 
 	if (currentIndex != prevIndex) {
 	  //change picture
-	  //printf("prevIndex: %d currentIndex: %d\n",prevIndex,currentIndex);
+	  printf("prevIndex: %d currentIndex: %d\n",prevIndex,currentIndex);
 	  slideshow_change_image_by_index(opt.w_data, currentIndex);
 	}
 
