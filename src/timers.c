@@ -59,7 +59,18 @@ int feh_get_pic_index(double interval, int numPics)
   now = time(0);
   tm = localtime(&now);
   int time_sec = tm->tm_sec;
-  printf("%d\n", time_sec);
+  struct timeval tv;
+
+  //time_t curtime;
+
+
+
+  gettimeofday(&tv, NULL);
+  curtime = tv.tv_sec;
+
+  strftime(buffer, 30, "%m-%d-%Y  %T.", localtime(&curtime));
+  printf("%s%ld\n", buffer, tv.tv_usec);
+  //printf("%d\n", time_sec);
   // get to closest interval
   int currentInterval = time_sec - (time_sec % (int)interval);
   int intervalIndex = floor(currentInterval/interval);
