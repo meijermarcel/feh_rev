@@ -61,7 +61,7 @@ int feh_get_pic_index(double interval, int numPics)
   int time_sec = tm->tm_sec;
   struct timeval tv;
   char buffer[30];
-  //time_t curtime;
+  time_t curtime;
 
 
 
