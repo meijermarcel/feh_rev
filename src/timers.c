@@ -67,6 +67,7 @@ int feh_get_pic_index(double interval, int numPics)
 
   gettimeofday(&tv, NULL);
   curtime = tv.tv_sec;
+  time_sec = tv.tv_sec;
 
   strftime(buffer, 30, "%m-%d-%Y  %T.", localtime(&curtime));
   printf("%s%ld\n", buffer, tv.tv_usec);
