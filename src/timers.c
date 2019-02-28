@@ -76,6 +76,8 @@ int feh_get_pic_index(double interval, int numPics)
   int currentInterval = time_sec - (time_sec % (int)interval);
   int intervalIndex = floor(currentInterval/interval);
   index = intervalIndex % numPics;
+
+  printf("curIntrval: %d intIndex: %d index: %d\n", currentInterval, intervalIndex, index);
   
   return index;
 }
