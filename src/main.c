@@ -145,9 +145,9 @@ int feh_main_iteration(int block)
 
 		strftime(buffer, 30, "%m-%d-%Y  %T.", localtime(&curtime));
 		printf("%s%ld\n", buffer, tv.tv_usec);
-	  //change picture
-	  printf("prevIndex: %d currentIndex: %d\n",prevIndex,currentIndex);
-	  slideshow_change_image_by_index(opt.w_data, currentIndex);
+		//change picture
+		printf("prevIndex: %d currentIndex: %d\n",prevIndex,currentIndex);
+		slideshow_change_image_by_index(opt.w_data, currentIndex);
 	}
 
 	prevIndex = currentIndex;
