@@ -64,6 +64,9 @@ int feh_get_pic_index(double interval, int numPics)
   gettimeofday(&tv, NULL);
   time_sec = tv.tv_sec;
 
+  strftime(buffer, 30, "%m-%d-%Y  %T.", tm);
+  printf("%s%ld\n", buffer, tv.tv_usec);
+
   // get to closest interval
   //int currentInterval = time_sec - (time_sec % (int)interval);
   int intervalIndex = floor((time_sec - (time_sec % (int)interval))/interval);
