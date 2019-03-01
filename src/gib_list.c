@@ -142,7 +142,7 @@ gib_list_add_front(gib_list * root, void *data)
    return (l);
 }
 
-gib_list * gib_list_add_array(gib_list * mainArray[], void *data, int *index, int *maxSize, gib_list * root)
+gib_list * gib_list_add_array(gib_list * mainArray[], void *data, int index, int maxSize, gib_list * root)
 {
 	gib_list *l;
 
@@ -155,15 +155,15 @@ gib_list * gib_list_add_array(gib_list * mainArray[], void *data, int *index, in
 	mainArray[index] = l;
 	//printf("inside index: %d maxSize: %d\n", index, maxSize);
 	index++;
-	if (index >= *maxSize)
+	if (index >= maxSize)
 	{
-		*maxSize *= 2;
-		gib_list * newArray[*maxSize];
+		maxSize *= 2;
+		gib_list * newArray[maxSize];
 		for (int i = 0; i < index; i++)
 		{
 			newArray[i] = mainArray[i];
 		}
-		*mainArray = newArray;
+		mainArray = newArray;
 	}
 
 	return (l);
