@@ -145,7 +145,7 @@ void init_slideshow_mode(void)
 	*/
 
 	
-	/*
+	
 	int start_count = 0;
 	for (l = filelist; l; l = l->next)
 	  {
@@ -155,9 +155,9 @@ void init_slideshow_mode(void)
 	      }
 	    start_count++;
 	  }
-	*/
+	
 
-	l = fileArray[opt.initial_index];
+	//l = fileArray[opt.initial_index];
 
 	mode = "slideshow";
 	for (; l; l = l->next) {
@@ -867,7 +867,7 @@ gib_list *feh_list_jump(gib_list * root, gib_list * l, int direction, int num)
 	return (ret);
 }
 
-/*
+
 gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
 {
   gib_list *ret = NULL;
@@ -889,6 +889,7 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
     }
   }
 
+  /*
   if (index == 0) {
     // need to advance root to first pic
     printf("zero\n");
@@ -899,6 +900,7 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
       printf("nope\n");
     }
   }
+  */
 
   if (ret) {
     printf("exists\n");
@@ -906,8 +908,9 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
 
   return ret;
 }
-*/
 
+
+/*
 gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
 {
 	gib_list *ret = NULL;
@@ -920,3 +923,4 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
 
 	return ret;
 }
+*/
