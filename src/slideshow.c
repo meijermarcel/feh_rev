@@ -880,7 +880,7 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
   ret = root;
 
   for (int i = 0; i < index; i++) {
-    printf("index: %d\n",i);
+    //printf("index: %d\n",i);
     if (ret->next) {
       ret = ret->next;
     }
@@ -889,22 +889,6 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
     }
   }
 
-  /*
-  if (index == 0) {
-    // need to advance root to first pic
-    printf("zero\n");
-    if (ret->next) {
-      // ret = ret->next;
-    }
-    else {
-      printf("nope\n");
-    }
-  }
-  */
-
-  if (ret) {
-    printf("exists\n");
-  }
 
   return ret;
 }

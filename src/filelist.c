@@ -34,15 +34,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "options.h"
 
 gib_list *filelist = NULL;
-gib_list *fileArray[100];
 gib_list *original_file_items = NULL; /* original file items from argv */
 int filelist_len = 0;
 gib_list *current_file = NULL;
 extern int errno;
 
 static gib_list *rm_filelist = NULL;
-static int indexArray = 0;
-static int maxSize = 100;
 
 
 feh_file *feh_file_new(char *filename)
@@ -306,15 +303,11 @@ void add_file_to_filelist_recursively(char *origpath, unsigned char level)
 	} else if (S_ISREG(st.st_mode)) {
 		D(("Adding regular file %s to filelist\n", path));
 		//rintf("regular file\n");
-		//filelist = gib_list_add_front(filelist, feh_file_new(path));
-		filelist = gib_list_add_array(fileArray, feh_file_new(path), indexArray, maxSize, filelist);
-		indexArray++;
-		if (indexArray >= maxSize)
-		{
-			maxSize *= 2;
-		}
+		filelist = gib_list_add_front(filelist, feh_file_new(path));
+		//filelist = gib_list_add_array(fileArray, feh_file_new(path), indexArray, maxSize, filelist);
+		
 		//printf("index: %d maxSize: %d\n", indexArray, maxSize);
-		int fileSizeArray = sizeof(fileArray) / sizeof(fileArray[0]);
+		//int fileSizeArray = sizeof(fileArray) / sizeof(fileArray[0]);
 		//printf("size: %d\n", fileSizeArray);
 	}
 	free(path);
