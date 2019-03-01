@@ -66,8 +66,8 @@ int feh_get_pic_index(double interval, int numPics)
 
   // get to closest interval
   //int currentInterval = time_sec - (time_sec % (int)interval);
-  //int intervalIndex = floor((time_sec - (time_sec % (int)interval))/interval);
-  index = (floor((time_sec - (time_sec % (int)interval)) / interval)) % numPics;
+  int intervalIndex = floor((time_sec - (time_sec % (int)interval))/interval);
+  index = intervalIndex % numPics;
 
   //printf("curIntrval: %d intIndex: %d index: %d\n", currentInterval, intervalIndex, index);
   
