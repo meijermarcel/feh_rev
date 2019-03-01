@@ -95,14 +95,14 @@ int feh_main_iteration(int block)
 {
 	static int first = 1;
 	static int xfd = 0;
-	static int fdsize = 0;
+	//static int fdsize = 0;
 	//static double pt = 0.0;
 	XEvent ev;
-	struct timeval tval;
+	//struct timeval tval;
 	fd_set fdset;
-	int count = 0;
+	//int count = 0;
 	//double t1 = 0.0, t2 = 0.0;
-	fehtimer ft;
+	//fehtimer ft;
 	static int currentIndex = -1;
 	static int prevIndex = -1;
 
@@ -173,67 +173,6 @@ int feh_main_iteration(int block)
 	if (control_via_stdin)
 		FD_SET(STDIN_FILENO, &fdset);
 
-	/* Timers */
-	//ft = first_timer;
-	/* Don't do timers if we're zooming/panning/etc or if we are paused */
-	/*
-	if (ft && (opt.mode == MODE_NORMAL) && !opt.paused) {
-		D(("There are timers in the queue\n"));
-		if (ft->just_added) {
-			D(("The first timer has just been added\n"));
-			D(("ft->in = %f\n", ft->in));
-			ft->just_added = 0;
-			t1 = ft->in;
-		} else {
-			D(("The first timer was not just added\n"));
-			t1 = ft->in - t2;
-			if (t1 < 0.0)
-				t1 = 0.0;
-			ft->in = t1;
-		}
-
-		XSync(disp, False);
-		D(("I next need to action a timer in %f seconds\n", t1));
-		/* Only do a blocking select if there's a timer due, or no events
-		   waiting 
-		if (t1 == 0.0 || (block && !XPending(disp))) {
-			tval.tv_sec = (long) t1;
-			tval.tv_usec = (long) ((t1 - ((double) tval.tv_sec)) * 1000000);
-			if (tval.tv_sec < 0)
-				tval.tv_sec = 0;
-			if (tval.tv_usec <= 1000)
-				tval.tv_usec = 1000;
-			errno = 0;
-			D(("Performing blocking select - waiting for timer or event\n"));
-			count = select(fdsize, &fdset, NULL, NULL, &tval);
-			if ((count < 0)
-					&& ((errno == ENOMEM) || (errno == EINVAL)
-						|| (errno == EBADF)))
-				eprintf("Connection to X display lost");
-			if (count == 0) {
-				/* This means the timer is due to be executed. If count was > 0,
-				   that would mean an X event had woken us, we're not interested
-				   in that 
-				feh_handle_timer();
-			}
-			else if ((count > 0) && (FD_ISSET(0, &fdset)))
-				feh_event_handle_stdin();
-		}
-	} else {
-		/* Don't block if there are events in the queue. That's a bit rude ;-) 
-		if (block && !XPending(disp)) {
-			errno = 0;
-			D(("Performing blocking select - no timers, or zooming\n"));
-			count = select(fdsize, &fdset, NULL, NULL, NULL);
-			if ((count < 0)
-					&& ((errno == ENOMEM) || (errno == EINVAL)
-						|| (errno == EBADF)))
-				eprintf("Connection to X display lost");
-			else if ((count > 0) && (FD_ISSET(0, &fdset)))
-				feh_event_handle_stdin();
-		}
-	}
-	*/
 	if (window_num == 0 || sig_exit != 0)
 		return(0);
 	
