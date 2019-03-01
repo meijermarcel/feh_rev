@@ -53,19 +53,19 @@ void feh_handle_timer(void)
 int feh_get_pic_index(double interval, int numPics)
 {
   int index = 0;
-  struct tm *tm;
-  time_t now;
-  char buffer[30];
-  now = time(0);
-  tm = localtime(&now);
-  int time_sec = tm->tm_sec;
+  //struct tm *tm;
+  //time_t now;
+  //char buffer[30];
+  //now = time(0);
+  //tm = localtime(&now);
+  //int time_sec = tm->tm_sec;
   struct timeval tv;
 
   gettimeofday(&tv, NULL);
-  time_sec = tv.tv_sec;
+  int time_sec = tv.tv_sec;
 
-  strftime(buffer, 30, "%m-%d-%Y  %T.", tm);
-  printf("%s%ld\n", buffer, tv.tv_usec);
+  //strftime(buffer, 30, "%m-%d-%Y  %T.", tm);
+  //printf("%s%ld\n", buffer, tv.tv_usec);
 
   // get to closest interval
   //int currentInterval = time_sec - (time_sec % (int)interval);
