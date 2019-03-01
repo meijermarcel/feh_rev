@@ -60,22 +60,14 @@ int feh_get_pic_index(double interval, int numPics)
   tm = localtime(&now);
   int time_sec = tm->tm_sec;
   struct timeval tv;
-  char buffer[30];
-  time_t curtime;
-
-
 
   gettimeofday(&tv, NULL);
-  curtime = tv.tv_sec;
   time_sec = tv.tv_sec;
 
-  //strftime(buffer, 30, "%m-%d-%Y  %T.", localtime(&curtime));
-  //printf("%s%ld\n", buffer, tv.tv_usec);
-  //printf("%d\n", time_sec);
   // get to closest interval
-  int currentInterval = time_sec - (time_sec % (int)interval);
-  int intervalIndex = floor(currentInterval/interval);
-  index = intervalIndex % numPics;
+  //int currentInterval = time_sec - (time_sec % (int)interval);
+  //int intervalIndex = floor((time_sec - (time_sec % (int)interval))/interval);
+  index = (floor((time_sec - (time_sec % (int)interval)) / interval)) % numPics;
 
   //printf("curIntrval: %d intIndex: %d index: %d\n", currentInterval, intervalIndex, index);
   

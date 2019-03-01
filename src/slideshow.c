@@ -113,52 +113,17 @@ void init_slideshow_mode(void)
 	}
 
 	opt.pic_count = pic_count;
-	//opt.interval = 10.0;
-	printf("Num pics: %d\n", opt.pic_count);
 	
-
-	//printf("pic_count %d\n",pic_count);
-	//double test_time = feh_get_time();
-	//printf("time: %f\n",test_time);
-	//now = time(0);
-	//tm = localtime(&now);
-	//printf("%d\n",tm->tm_sec);
-	//double interval = 15.0;
 	opt.initial_index = feh_get_pic_index(opt.interval, pic_count);
-	//printf("initial_index: %d\n",opt.initial_index);
-	//printf("pic_number: %d\n",pic_number);
-	//int time_sec = tm->tm_sec;
-
-	/*
-	if (time_sec > 14 && time_sec <= 29)
-	  {
-	    pic_number = 1;
-	  }
-	else if (time_sec > 29 && time_sec <= 44)
-	  {
-	    pic_number = 2;
-	  }
-	else if (time_sec > 44)
-	  {
-	    pic_number = 3;
-	  }
-	*/
-
-	
 	
 	int start_count = 0;
 	for (l = filelist; l; l = l->next)
-	  {
+	{
 	    if (start_count == opt.initial_index)
-	      {
-		break;
-	      }
+			break;
 	    start_count++;
-	  }
+	}
 	
-
-	//l = fileArray[opt.initial_index];
-
 	mode = "slideshow";
 	for (; l; l = l->next) {
 		if (last) {
@@ -170,13 +135,6 @@ void init_slideshow_mode(void)
 			success = 1;
 			winwidget_show(w);
 			opt.w_data = w;
-			/*
-			if (opt.slideshow_delay > 0.0)
-			        feh_add_timer(cb_slide_timer, w, 1, "SLIDE_CHANGE");
-			*/
-			//feh_add_timer(cb_slide_timer,w,1,"SLIDE_CHANGE");
-			//if (opt.reload > 0)
-			  //feh_add_unique_timer(cb_reload_timer, w, opt.reload);
 			break;
 		} else {
 			last = l;
