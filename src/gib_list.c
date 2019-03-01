@@ -152,18 +152,18 @@ gib_list * gib_list_add_array(gib_list * mainArray[], void *data, int *index, in
 	if (root)
 		root->prev = l;
 	
-	mainArray[index] = l;
+	mainArray[*index] = l;
 	//printf("inside index: %d maxSize: %d\n", index, maxSize);
-	index++;
-	if (index >= *maxSize)
+	*index++;
+	if (*index >= *maxSize)
 	{
 		*maxSize *= 2;
 		gib_list * newArray[*maxSize];
-		for (int i = 0; i < index; i++)
+		for (int i = 0; i < *index; i++)
 		{
 			newArray[i] = mainArray[i];
 		}
-		*mainArray = newArray;
+		mainArray = &newArray;
 	}
 
 	return (l);
