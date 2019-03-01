@@ -113,7 +113,7 @@ void init_slideshow_mode(void)
 	}
 
 	opt.pic_count = pic_count;
-	opt.interval = 10.0;
+	//opt.interval = 10.0;
 	
 
 	//printf("pic_count %d\n",pic_count);
