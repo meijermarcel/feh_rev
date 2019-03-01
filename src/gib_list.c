@@ -163,7 +163,7 @@ gib_list * gib_list_add_array(gib_list * mainArray[], void *data, int *index, in
 		{
 			newArray[i] = mainArray[i];
 		}
-		mainArray = newArray;
+		mainArray = &newArray;
 	}
 
 	return (l);

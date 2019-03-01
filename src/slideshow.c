@@ -492,7 +492,7 @@ void slideshow_change_image(winwidget winwid, int change, int render)
 void slideshow_change_image_by_index(winwidget winwid, int index)
 {
 	gib_list *last = NULL;
-	//gib_list *previous_file = current_file;
+	gib_list *previous_file = current_file;
 	int i;
 	/* We can't use filelist_len in the for loop, since that changes when we
 	 * encounter invalid images.
@@ -503,8 +503,21 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 	/* The for loop prevents us looping infinitely */
 	for (i = 0; i < our_filelist_len; i++) {
 		winwidget_free_image(winwid);
-		current_file = feh_list_jump_to_pic(index);
+		current_file = feh_list_jump_to_pic(filelist, current_file, index);
+		//current_file = fileArray[8];
+		if (index == 0)
+		{
+			//printf("hello!!\n");
+		}
 		
+		
+		if (last) {
+			//filelist = feh_file_remove_from_list(filelist, last);
+			//last = NULL;
+			//printf("last thing\n");
+		}
+		
+
 		if (winwidget_loadimage(winwid, FEH_FILE(current_file->data))) {
 			//printf("render image %s\n",FEH_FILE(current_file->data)->filename);
 			int w = gib_imlib_image_get_width(winwid->im);
@@ -534,6 +547,8 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 		}
 			
 	}
+	//if (last)
+	//	filelist = feh_file_remove_from_list(filelist, last);
 
 	if (filelist_len == 0)
 		eprintf("No more slides in show");
@@ -893,7 +908,7 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
 }
 */
 
-gib_list *feh_list_jump_to_pic(int index)
+gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
 {
 	gib_list *ret = NULL;
 	ret = fileArray[index];

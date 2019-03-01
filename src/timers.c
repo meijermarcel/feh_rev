@@ -60,13 +60,13 @@ int feh_get_pic_index(double interval, int numPics)
   tm = localtime(&now);
   int time_sec = tm->tm_sec;
   struct timeval tv;
-  //char buffer[30];
-  //time_t curtime;
+  char buffer[30];
+  time_t curtime;
 
 
 
   gettimeofday(&tv, NULL);
-  //curtime = tv.tv_sec;
+  curtime = tv.tv_sec;
   time_sec = tv.tv_sec;
 
   //strftime(buffer, 30, "%m-%d-%Y  %T.", localtime(&curtime));

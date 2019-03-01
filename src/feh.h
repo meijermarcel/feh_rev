@@ -179,7 +179,7 @@ void feh_edit_inplace_lossless(winwidget w, int orientation);
 gib_list *feh_wrap_string(char *text, int wrap_width, Imlib_Font fn, gib_style * style);
 char *build_caption_filename(feh_file * file, short create_dir);
 gib_list *feh_list_jump(gib_list * root, gib_list * l, int direction, int num);
-gib_list *feh_list_jump_to_pic(int index);
+gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index);
 void slideshow_change_image_by_index(winwidget winwid, int index);
 
 /* Imlib stuff */
