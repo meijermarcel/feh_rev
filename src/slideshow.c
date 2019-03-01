@@ -835,7 +835,7 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
   if (!l)
     return (root);
 
-  ret = root;
+  ret = l;
 
   for (int i = 0; i < index; i++) {
     //printf("index: %d\n",i);
