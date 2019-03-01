@@ -95,14 +95,9 @@ int feh_main_iteration(int block)
 {
 	static int first = 1;
 	static int xfd = 0;
-	//static int fdsize = 0;
-	//static double pt = 0.0;
+	static int fdsize = 0;
 	XEvent ev;
-	//struct timeval tval;
 	fd_set fdset;
-	//int count = 0;
-	//double t1 = 0.0, t2 = 0.0;
-	//fehtimer ft;
 	static int currentIndex = -1;
 	static int prevIndex = -1;
 
@@ -113,7 +108,6 @@ int feh_main_iteration(int block)
 		/* Only need to set these up the first time */
 		xfd = ConnectionNumber(disp);
 		fdsize = xfd + 1;
-		//pt = feh_get_time();
 		prevIndex = opt.initial_index;
 		first = 0;
 		/*
@@ -152,10 +146,6 @@ int feh_main_iteration(int block)
 
 	prevIndex = currentIndex;
 
-	
-	//t1 = feh_get_time();
-	//t2 = t1 - pt;
-	//pt = t1;
 	while (XPending(disp)) {
 		XNextEvent(disp, &ev);
 		if (ev_handler[ev.type])
