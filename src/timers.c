@@ -55,7 +55,7 @@ int feh_get_pic_index(double interval, int numPics)
   int index = 0;
   struct tm *tm;
   time_t now;
-
+  char buffer[30];
   now = time(0);
   tm = localtime(&now);
   int time_sec = tm->tm_sec;
