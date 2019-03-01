@@ -132,8 +132,6 @@ int feh_main_iteration(int block)
 		char buffer[30];
 		time_t curtime;
 
-
-
 		gettimeofday(&tv, NULL);
 		curtime = tv.tv_sec;
 
