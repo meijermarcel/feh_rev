@@ -93,7 +93,7 @@ gib_list *gib_list_find_by_data(gib_list *root, void *data);
 
 /* don't really belong here, will do for now */
 gib_list *gib_string_split(const char *string, const char *delimiter);
-gib_list * gib_list_add_array(gib_list * mainArray[], void *data, int index, int maxSize, gib_list * root);
+gib_list * gib_list_add_array(gib_list * mainArray[], void *data, int *index, int *maxSize, gib_list * root);
 /*
 char *gib_strjoin(const char *separator, ...);
 */
