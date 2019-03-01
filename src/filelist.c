@@ -34,7 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "options.h"
 
 gib_list *filelist = NULL;
-gib_list *fileArray[5];
+gib_list *fileArray[100];
 gib_list *original_file_items = NULL; /* original file items from argv */
 int filelist_len = 0;
 gib_list *current_file = NULL;
@@ -42,7 +42,7 @@ extern int errno;
 
 static gib_list *rm_filelist = NULL;
 static int indexArray = 0;
-static int maxSize = 5;
+static int maxSize = 100;
 
 
 feh_file *feh_file_new(char *filename)
