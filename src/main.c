@@ -96,12 +96,12 @@ int feh_main_iteration(int block)
 	static int first = 1;
 	static int xfd = 0;
 	static int fdsize = 0;
-	static double pt = 0.0;
+	//static double pt = 0.0;
 	XEvent ev;
 	struct timeval tval;
 	fd_set fdset;
 	int count = 0;
-	double t1 = 0.0, t2 = 0.0;
+	//double t1 = 0.0, t2 = 0.0;
 	fehtimer ft;
 	static int currentIndex = -1;
 	static int prevIndex = -1;
