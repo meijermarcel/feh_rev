@@ -493,10 +493,8 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 			if ((winwid->im_w != w) || (winwid->im_h != h))
 				winwid->had_resize = 1;
 			winwidget_reset_image(winwid);
-			//winwid->im_w = w;
-			//winwid->im_h = h;
-			winwid->im_w = 500;
-			winwid->im_h = 500;
+			winwid->im_w = w;
+			winwid->im_h = h;
 			//timeNow = feh_get_time();
 			if (index >= 0) {
 				winwidget_render_image(winwid, 1, 0);

@@ -527,7 +527,7 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 
 	D(("winwidget_render(): winwid->im_angle = %f\n", winwid->im_angle));
 	double timeNow = feh_get_time();
-	if (winwid->has_rotated)
+	/*if (winwid->has_rotated)
 		gib_imlib_render_image_part_on_drawable_at_size_with_rotation
 		(winwid->bg_pmap, winwid->im, sx, sy, sw, sh, dx, dy, dw, dh,
 			winwid->im_angle, 1, 1, antialias);
@@ -538,8 +538,8 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 			sh, dx, dy,
 			dw, dh, 1,
 			gib_imlib_image_has_alpha(winwid->im),
-			antialias);
-	/*if (winwid->has_rotated)
+			antialias);*/
+	if (winwid->has_rotated)
 		gib_imlib_render_image_part_on_drawable_at_size_with_rotation
 			(winwid->bg_pmap, winwid->im, sx, sy, sw, sh, dx, dy, dw, dh,
 			winwid->im_angle, 1, 1, antialias);
@@ -550,7 +550,7 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 								150, dx, dy,
 								150, 150, 1,
 								gib_imlib_image_has_alpha(winwid->im),
-								antialias);*/
+								antialias);
 	double timeAfter = feh_get_time();
 	timeAfter -= timeNow;
 	printf("middle image time: %f\n", timeAfter);
