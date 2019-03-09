@@ -588,6 +588,334 @@ void winwidget_render_image_cached(winwidget winwid)
 	XClearWindow(disp, winwid->win);
 }
 
+//void winwidget_render_image(winwidget winwid, int resize, int force_alias)
+//{
+//	int sx, sy, sw, sh, dx, dy, dw, dh;
+//	int calc_w, calc_h;
+//	int antialias = 0;
+//
+//	if (!winwid->full_screen && resize) {
+//		winwidget_resize(winwid, winwid->im_w, winwid->im_h, 0);
+//		winwidget_reset_image(winwid);
+//	}
+//
+//	D(("winwidget_render_image resize %d force_alias %d im %dx%d\n",
+//	      resize, force_alias, winwid->im_w, winwid->im_h));
+//
+//	/* winwidget_setup_pixmaps(winwid) resets the winwid->had_resize flag */
+//	int had_resize = winwid->had_resize || resize;
+//
+//	winwidget_setup_pixmaps(winwid);
+//
+//	if (had_resize && !opt.keep_zoom_vp && (winwid->type != WIN_TYPE_THUMBNAIL)) {
+//		double required_zoom = 1.0;
+//		feh_calc_needed_zoom(&required_zoom, winwid->im_w, winwid->im_h, winwid->w, winwid->h);
+//
+//		winwid->zoom = opt.default_zoom ? (0.01 * opt.default_zoom) : 1.0;
+//
+//		if ((opt.scale_down || (winwid->full_screen && !opt.default_zoom))
+//				&& winwid->zoom > required_zoom)
+//			winwid->zoom = required_zoom;
+//		else if ((opt.zoom_mode && required_zoom > 1)
+//				&& (!opt.default_zoom || required_zoom < winwid->zoom))
+//			winwid->zoom = required_zoom;
+//
+//		if (opt.offset_flags & XValue) {
+//			if (opt.offset_flags & XNegative) {
+//				winwid->im_x = winwid->w - (winwid->im_w * winwid->zoom) - opt.offset_x;
+//			} else {
+//				winwid->im_x = - opt.offset_x * winwid->zoom;
+//			}
+//		} else {
+//			winwid->im_x = (int) (winwid->w - (winwid->im_w * winwid->zoom)) >> 1;
+//		}
+//		if (opt.offset_flags & YValue) {
+//			if (opt.offset_flags & YNegative) {
+//				winwid->im_y = winwid->h - (winwid->im_h * winwid->zoom) - opt.offset_y;
+//			} else {
+//				winwid->im_y = - opt.offset_y * winwid->zoom;
+//			}
+//		} else {
+//			winwid->im_y = (int) (winwid->h - (winwid->im_h * winwid->zoom)) >> 1;
+//		}
+//	}
+//
+//	winwid->had_resize = 0;
+//
+//	if (opt.keep_zoom_vp)
+//		winwidget_sanitise_offsets(winwid);
+//
+//	if (!winwid->full_screen && ((gib_imlib_image_has_alpha(winwid->im))
+//				     || (opt.geom_flags & (WidthValue | HeightValue))
+//				     || (winwid->im_x || winwid->im_y)
+//				     || (winwid->w > winwid->im_w * winwid->zoom)
+//				     || (winwid->h > winwid->im_h * winwid->zoom)
+//				     || (winwid->has_rotated)))
+//		feh_draw_checks(winwid);
+//
+//	/* Now we ensure only to render the area we're looking at */
+//	dx = winwid->im_x;
+//	dy = winwid->im_y;
+//	if (dx < 0)
+//		dx = 0;
+//	if (dy < 0)
+//		dy = 0;
+//
+//	if (winwid->im_x < 0)
+//		sx = 0 - lround(winwid->im_x / winwid->zoom);
+//	else
+//		sx = 0;
+//
+//	if (winwid->im_y < 0)
+//		sy = 0 - lround(winwid->im_y / winwid->zoom);
+//	else
+//		sy = 0;
+//
+//	calc_w = lround(winwid->im_w * winwid->zoom);
+//	calc_h = lround(winwid->im_h * winwid->zoom);
+//	dw = (winwid->w - winwid->im_x);
+//	dh = (winwid->h - winwid->im_y);
+//	if (calc_w < dw)
+//		dw = calc_w;
+//	if (calc_h < dh)
+//		dh = calc_h;
+//	if (dw > winwid->w)
+//		dw = winwid->w;
+//	if (dh > winwid->h)
+//		dh = winwid->h;
+//
+//	sw = lround(dw / winwid->zoom);
+//	sh = lround(dh / winwid->zoom);
+//
+//	D(("sx: %d sy: %d sw: %d sh: %d dx: %d dy: %d dw: %d dh: %d zoom: %f\n",
+//	   sx, sy, sw, sh, dx, dy, dw, dh, winwid->zoom));
+//
+//	if ((winwid->zoom != 1.0 || winwid->has_rotated) && !force_alias && !winwid->force_aliasing)
+//		antialias = 1;
+//
+//	D(("winwidget_render(): winwid->im_angle = %f\n", winwid->im_angle));
+//	if (winwid->has_rotated)
+//		gib_imlib_render_image_part_on_drawable_at_size_with_rotation
+//			(winwid->bg_pmap, winwid->im, sx, sy, sw, sh, dx, dy, dw, dh,
+//			winwid->im_angle, 1, 1, antialias);
+//	else
+//		gib_imlib_render_image_part_on_drawable_at_size(winwid->bg_pmap,
+//								winwid->im,
+//								sx, sy, sw,
+//								sh, dx, dy,
+//								dw, dh, 1,
+//								gib_imlib_image_has_alpha(winwid->im),
+//								antialias);
+//
+//	if (opt.mode == MODE_NORMAL) {
+//		if (opt.caption_path)
+//			winwidget_update_caption(winwid);
+//		if (opt.draw_filename)
+//			feh_draw_filename(winwid);
+//#ifdef HAVE_LIBEXIF
+//		if (opt.draw_exif)
+//			feh_draw_exif(winwid);
+//#endif
+//		if (opt.draw_actions)
+//			feh_draw_actions(winwid);
+//		if (opt.draw_info && opt.info_cmd)
+//			feh_draw_info(winwid);
+//		if (winwid->errstr)
+//			feh_draw_errstr(winwid);
+//		if (winwid->file != NULL) {
+//			if (opt.title && winwid->type != WIN_TYPE_THUMBNAIL_VIEWER) {
+//				winwidget_rename(winwid, feh_printf(opt.title, FEH_FILE(winwid->file->data), winwid));
+//			} else if (opt.thumb_title && winwid->type == WIN_TYPE_THUMBNAIL_VIEWER) {
+//				winwidget_rename(winwid, feh_printf(opt.thumb_title, FEH_FILE(winwid->file->data), winwid));
+//			}
+//		}
+//	} else if ((opt.mode == MODE_ZOOM) && !antialias)
+//		feh_draw_zoom(winwid);
+//
+//	XSetWindowBackgroundPixmap(disp, winwid->win, winwid->bg_pmap);
+//	XClearWindow(disp, winwid->win);
+//	return;
+//}
+
+void winwidget_render_image(winwidget winwid, int resize, int force_alias)
+{
+	double timeNow = feh_get_time();
+	int sx, sy, sw, sh, dx, dy, dw, dh;
+	int calc_w, calc_h;
+	int antialias = 0;
+
+	if (!winwid->full_screen && resize) {
+		winwidget_resize(winwid, winwid->im_w, winwid->im_h, 0);
+		winwidget_reset_image(winwid);
+	}
+
+	D(("winwidget_render_image resize %d force_alias %d im %dx%d\n",
+		resize, force_alias, winwid->im_w, winwid->im_h));
+
+	/* winwidget_setup_pixmaps(winwid) resets the winwid->had_resize flag */
+	int had_resize = winwid->had_resize || resize;
+
+	winwidget_setup_pixmaps(winwid);
+
+	if (had_resize && !opt.keep_zoom_vp && (winwid->type != WIN_TYPE_THUMBNAIL)) {
+		double required_zoom = 1.0;
+		feh_calc_needed_zoom(&required_zoom, winwid->im_w, winwid->im_h, winwid->w, winwid->h);
+
+		winwid->zoom = opt.default_zoom ? (0.01 * opt.default_zoom) : 1.0;
+
+		if ((opt.scale_down || (winwid->full_screen && !opt.default_zoom))
+			&& winwid->zoom > required_zoom)
+			winwid->zoom = required_zoom;
+		else if ((opt.zoom_mode && required_zoom > 1)
+			&& (!opt.default_zoom || required_zoom < winwid->zoom))
+			winwid->zoom = required_zoom;
+
+		if (opt.offset_flags & XValue) {
+			if (opt.offset_flags & XNegative) {
+				winwid->im_x = winwid->w - (winwid->im_w * winwid->zoom) - opt.offset_x;
+			}
+			else {
+				winwid->im_x = -opt.offset_x * winwid->zoom;
+			}
+		}
+		else {
+			winwid->im_x = (int)(winwid->w - (winwid->im_w * winwid->zoom)) >> 1;
+		}
+		if (opt.offset_flags & YValue) {
+			if (opt.offset_flags & YNegative) {
+				winwid->im_y = winwid->h - (winwid->im_h * winwid->zoom) - opt.offset_y;
+			}
+			else {
+				winwid->im_y = -opt.offset_y * winwid->zoom;
+			}
+		}
+		else {
+			winwid->im_y = (int)(winwid->h - (winwid->im_h * winwid->zoom)) >> 1;
+		}
+	}
+
+	winwid->had_resize = 0;
+
+	if (opt.keep_zoom_vp)
+		winwidget_sanitise_offsets(winwid);
+
+	if (!winwid->full_screen && ((gib_imlib_image_has_alpha(winwid->im))
+		|| (opt.geom_flags & (WidthValue | HeightValue))
+		|| (winwid->im_x || winwid->im_y)
+		|| (winwid->w > winwid->im_w * winwid->zoom)
+		|| (winwid->h > winwid->im_h * winwid->zoom)
+		|| (winwid->has_rotated)))
+		feh_draw_checks(winwid);
+
+	/* Now we ensure only to render the area we're looking at */
+	dx = winwid->im_x;
+	dy = winwid->im_y;
+	if (dx < 0)
+		dx = 0;
+	if (dy < 0)
+		dy = 0;
+
+	if (winwid->im_x < 0)
+		sx = 0 - lround(winwid->im_x / winwid->zoom);
+	else
+		sx = 0;
+
+	if (winwid->im_y < 0)
+		sy = 0 - lround(winwid->im_y / winwid->zoom);
+	else
+		sy = 0;
+	timeAfter = feh_get_time();
+	timeAfter -= timeNow;
+	printf("middle image time: %f\n", timeAfter);
+	calc_w = lround(winwid->im_w * winwid->zoom);
+	calc_h = lround(winwid->im_h * winwid->zoom);
+	dw = (winwid->w - winwid->im_x);
+	dh = (winwid->h - winwid->im_y);
+	if (calc_w < dw)
+		dw = calc_w;
+	if (calc_h < dh)
+		dh = calc_h;
+	if (dw > winwid->w)
+		dw = winwid->w;
+	if (dh > winwid->h)
+		dh = winwid->h;
+
+	sw = lround(dw / winwid->zoom);
+	sh = lround(dh / winwid->zoom);
+
+	D(("sx: %d sy: %d sw: %d sh: %d dx: %d dy: %d dw: %d dh: %d zoom: %f\n",
+		sx, sy, sw, sh, dx, dy, dw, dh, winwid->zoom));
+
+	if ((winwid->zoom != 1.0 || winwid->has_rotated) && !force_alias && !winwid->force_aliasing)
+		antialias = 1;
+
+	D(("winwidget_render(): winwid->im_angle = %f\n", winwid->im_angle));
+	if (winwid->has_rotated)
+		gib_imlib_render_image_part_on_drawable_at_size_with_rotation
+		(winwid->bg_pmap, winwid->im, sx, sy, sw, sh, dx, dy, dw, dh,
+			winwid->im_angle, 1, 1, antialias);
+	else
+		gib_imlib_render_image_part_on_drawable_at_size(winwid->bg_pmap,
+			winwid->im,
+			sx, sy, sw,
+			sh, dx, dy,
+			dw, dh, 1,
+			gib_imlib_image_has_alpha(winwid->im),
+			antialias);
+
+	if (opt.mode == MODE_NORMAL) {
+		if (opt.caption_path)
+			winwidget_update_caption(winwid);
+		if (opt.draw_filename)
+			feh_draw_filename(winwid);
+#ifdef HAVE_LIBEXIF
+		if (opt.draw_exif)
+			feh_draw_exif(winwid);
+#endif
+		if (opt.draw_actions)
+			feh_draw_actions(winwid);
+		if (opt.draw_info && opt.info_cmd)
+			feh_draw_info(winwid);
+		if (winwid->errstr)
+			feh_draw_errstr(winwid);
+		if (winwid->file != NULL) {
+			if (opt.title && winwid->type != WIN_TYPE_THUMBNAIL_VIEWER) {
+				winwidget_rename(winwid, feh_printf(opt.title, FEH_FILE(winwid->file->data), winwid));
+			}
+			else if (opt.thumb_title && winwid->type == WIN_TYPE_THUMBNAIL_VIEWER) {
+				winwidget_rename(winwid, feh_printf(opt.thumb_title, FEH_FILE(winwid->file->data), winwid));
+			}
+		}
+	}
+	else if ((opt.mode == MODE_ZOOM) && !antialias)
+		feh_draw_zoom(winwid);
+
+	XSetWindowBackgroundPixmap(disp, winwid->win, winwid->bg_pmap);
+	XClearWindow(disp, winwid->win);
+	return;
+}
+
+void winwidget_render_image_cached(winwidget winwid)
+{
+	static GC gc = None;
+
+	if (gc == None) {
+		gc = XCreateGC(disp, winwid->win, 0, NULL);
+	}
+	XCopyArea(disp, winwid->bg_pmap_cache, winwid->bg_pmap, gc, 0, 0, winwid->w, winwid->h, 0, 0);
+
+	if (opt.caption_path)
+		feh_draw_caption(winwid);
+	if (opt.draw_filename)
+		feh_draw_filename(winwid);
+	if (opt.draw_actions)
+		feh_draw_actions(winwid);
+	if (opt.draw_info && opt.info_cmd)
+		feh_draw_info(winwid);
+	XSetWindowBackgroundPixmap(disp, winwid->win, winwid->bg_pmap);
+	XClearWindow(disp, winwid->win);
+}
+
 double feh_calc_needed_zoom(double *zoom, int orig_w, int orig_h, int dest_w, int dest_h)
 {
 	double ratio = 0.0;
