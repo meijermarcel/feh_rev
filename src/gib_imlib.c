@@ -228,8 +228,8 @@ gib_imlib_render_image_part_on_drawable_at_size(Drawable d, Imlib_Image im,
    imlib_context_set_dither(dither);
    imlib_context_set_blend(blend);
    imlib_context_set_angle(0);
-   imlib_render_image_part_on_drawable_at_size(sx, sy, sw, sh, dx, dy, dw,
-                                               dh);
+   //imlib_render_image_part_on_drawable_at_size(sx, sy, sw, sh, dx, dy, dw, dh);
+   imlib_render_image_part_on_drawable_at_size(sx, sy, 500, 500, dx, dy, 500, 500);
 }
 
 
