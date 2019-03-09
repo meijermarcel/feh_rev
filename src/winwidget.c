@@ -421,7 +421,7 @@ void winwidget_setup_pixmaps(winwidget winwid)
 
 void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 {
-	double timeNow = feh_get_time();
+	
 	int sx, sy, sw, sh, dx, dy, dw, dh;
 	int calc_w, calc_h;
 	int antialias = 0;
@@ -502,10 +502,8 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 		sy = 0 - lround(winwid->im_y / winwid->zoom);
 	else
 		sy = 0;
-	double timeAfter = feh_get_time();
-	timeAfter -= timeNow;
-	printf("middle image time: %f\n", timeAfter);
-	timeNow = feh_get_time();
+	double timeNow = feh_get_time();
+	
 	calc_w = lround(winwid->im_w * winwid->zoom);
 	calc_h = lround(winwid->im_h * winwid->zoom);
 	dw = (winwid->w - winwid->im_x);
@@ -541,7 +539,10 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 								dw, dh, 1,
 								gib_imlib_image_has_alpha(winwid->im),
 								antialias);
-
+	double timeAfter = feh_get_time();
+	timeAfter -= timeNow;
+	printf("middle image time: %f\n", timeAfter);
+	timeNow = feh_get_time();
 	if (opt.mode == MODE_NORMAL) {
 		if (opt.caption_path)
 			winwidget_update_caption(winwid);
