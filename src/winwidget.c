@@ -427,7 +427,6 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 	int antialias = 0;
 
 	if (!winwid->full_screen && resize) {
-		printf("hello\n");
 		winwidget_resize(winwid, winwid->im_w, winwid->im_h, 0);
 		winwidget_reset_image(winwid);
 	}
