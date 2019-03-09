@@ -497,8 +497,8 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 				//printf("render this image %s\n", FEH_FILE(current_file->data)->filename);
 			}
 			double timeAfter = feh_get_time();
-			timeNow -= timeAfter;
-			printf("image time: %f\n", timeNow);
+			timeAfter -= timeNow;
+			printf("image time: %f\n", timeAfter);
 			break;
 		}
 		else
