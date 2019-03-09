@@ -186,6 +186,7 @@ gib_imlib_render_image_on_drawable_at_size(Drawable d, Imlib_Image im, int x,
    imlib_context_set_blend(blend);
    imlib_context_set_angle(0);
    imlib_render_image_on_drawable_at_size(x, y, w, h);
+   printf("size 2\n");
 }
 
 
@@ -230,6 +231,7 @@ gib_imlib_render_image_part_on_drawable_at_size(Drawable d, Imlib_Image im,
    imlib_context_set_angle(0);
    imlib_render_image_part_on_drawable_at_size(sx, sy, sw, sh, dx, dy, dw,
                                                dh);
+   printf("size\n");
 }
 
 
