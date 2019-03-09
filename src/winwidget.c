@@ -527,6 +527,18 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 
 	D(("winwidget_render(): winwid->im_angle = %f\n", winwid->im_angle));
 	double timeNow = feh_get_time();
+	/*if (winwid->has_rotated)
+		gib_imlib_render_image_part_on_drawable_at_size_with_rotation
+		(winwid->bg_pmap, winwid->im, sx, sy, sw, sh, dx, dy, dw, dh,
+			winwid->im_angle, 1, 1, antialias);
+	else
+		gib_imlib_render_image_part_on_drawable_at_size(winwid->bg_pmap,
+			winwid->im,
+			sx, sy, sw,
+			sh, dx, dy,
+			dw, dh, 1,
+			gib_imlib_image_has_alpha(winwid->im),
+			antialias);*/
 	if (winwid->has_rotated)
 		gib_imlib_render_image_part_on_drawable_at_size_with_rotation
 			(winwid->bg_pmap, winwid->im, sx, sy, sw, sh, dx, dy, dw, dh,
@@ -534,8 +546,8 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 	else
 		gib_imlib_render_image_part_on_drawable_at_size(winwid->bg_pmap,
 								winwid->im,
-								sx, sy, sw,
-								sh, dx, dy,
+								sx, sy, 150,
+								150, dx, dy,
 								dw, dh, 1,
 								gib_imlib_image_has_alpha(winwid->im),
 								antialias);
