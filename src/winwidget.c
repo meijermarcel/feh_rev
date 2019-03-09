@@ -590,6 +590,7 @@ void winwidget_render_image_cached(winwidget winwid)
 
 void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 {
+	printf("Hello\n");
 	double timeNow = feh_get_time();
 	int sx, sy, sw, sh, dx, dy, dw, dh;
 	int calc_w, calc_h;
