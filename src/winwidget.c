@@ -527,6 +527,7 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 		antialias = 1;
 
 	D(("winwidget_render(): winwid->im_angle = %f\n", winwid->im_angle));
+	double timeNow = feh_get_time();
 	if (winwid->has_rotated)
 		gib_imlib_render_image_part_on_drawable_at_size_with_rotation
 			(winwid->bg_pmap, winwid->im, sx, sy, sw, sh, dx, dy, dw, dh,
