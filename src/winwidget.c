@@ -420,6 +420,7 @@ void winwidget_setup_pixmaps(winwidget winwid)
 
 void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 {
+	printf("Render it\n");
 	int sx, sy, sw, sh, dx, dy, dw, dh;
 	int calc_w, calc_h;
 	int antialias = 0;
