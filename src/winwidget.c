@@ -501,7 +501,7 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 		sy = 0 - lround(winwid->im_y / winwid->zoom);
 	else
 		sy = 0;
-	timeAfter = feh_get_time();
+	double timeAfter = feh_get_time();
 	timeAfter -= timeNow;
 	printf("middle image time: %f\n", timeAfter);
 	timeNow = feh_get_time();
