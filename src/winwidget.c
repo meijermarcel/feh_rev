@@ -548,7 +548,7 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 								winwid->im,
 								sx, sy, 150,
 								150, dx, dy,
-								dw, dh, 1,
+								150, 150, 1,
 								gib_imlib_image_has_alpha(winwid->im),
 								antialias);
 	double timeAfter = feh_get_time();
