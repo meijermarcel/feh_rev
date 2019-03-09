@@ -485,6 +485,8 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 			//int h = gib_imlib_image_get_height(winwid->im);
 			int w = 500;
 			int h = 500;
+			winwid->w = w;
+			winwid->h = h;
 			if (feh_should_ignore_image(winwid->im)) {
 				//printf("ignored\n");
 				last = current_file;
