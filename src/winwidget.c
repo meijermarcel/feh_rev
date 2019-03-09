@@ -541,7 +541,7 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 								antialias);
 	double timeAfter = feh_get_time();
 	timeAfter -= timeNow;
-	printf("middle image time: %f\n", timeAfter);
+	printf("render image time: %f\n", timeAfter);
 	timeNow = feh_get_time();
 	if (opt.mode == MODE_NORMAL) {
 		if (opt.caption_path)
@@ -570,9 +570,6 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 
 	XSetWindowBackgroundPixmap(disp, winwid->win, winwid->bg_pmap);
 	XClearWindow(disp, winwid->win);
-	timeAfter = feh_get_time();
-	timeAfter -= timeNow;
-	printf("end image time: %f\n", timeAfter);
 	return;
 }
 
