@@ -427,7 +427,6 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 	int antialias = 0;
 
 	if (!winwid->full_screen && resize) {
-		printf("hello\n");
 		winwidget_resize(winwid, winwid->im_w, winwid->im_h, 0);
 		winwidget_reset_image(winwid);
 	}
@@ -439,6 +438,39 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 	int had_resize = winwid->had_resize || resize;
 
 	winwidget_setup_pixmaps(winwid);
+
+	if (had_resize && !opt.keep_zoom_vp && (winwid->type != WIN_TYPE_THUMBNAIL)) {
+		double required_zoom = 1.0;
+		feh_calc_needed_zoom(&required_zoom, winwid->im_w, winwid->im_h, winwid->w, winwid->h);
+
+		winwid->zoom = opt.default_zoom ? (0.01 * opt.default_zoom) : 1.0;
+
+		if ((opt.scale_down || (winwid->full_screen && !opt.default_zoom))
+				&& winwid->zoom > required_zoom)
+			winwid->zoom = required_zoom;
+		else if ((opt.zoom_mode && required_zoom > 1)
+				&& (!opt.default_zoom || required_zoom < winwid->zoom))
+			winwid->zoom = required_zoom;
+
+		if (opt.offset_flags & XValue) {
+			if (opt.offset_flags & XNegative) {
+				winwid->im_x = winwid->w - (winwid->im_w * winwid->zoom) - opt.offset_x;
+			} else {
+				winwid->im_x = - opt.offset_x * winwid->zoom;
+			}
+		} else {
+			winwid->im_x = (int) (winwid->w - (winwid->im_w * winwid->zoom)) >> 1;
+		}
+		if (opt.offset_flags & YValue) {
+			if (opt.offset_flags & YNegative) {
+				winwid->im_y = winwid->h - (winwid->im_h * winwid->zoom) - opt.offset_y;
+			} else {
+				winwid->im_y = - opt.offset_y * winwid->zoom;
+			}
+		} else {
+			winwid->im_y = (int) (winwid->h - (winwid->im_h * winwid->zoom)) >> 1;
+		}
+	}
 
 	winwid->had_resize = 0;
 
