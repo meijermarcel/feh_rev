@@ -418,26 +418,6 @@ void winwidget_setup_pixmaps(winwidget winwid)
 	return;
 }
 
-void winwidget_render_image_cached(winwidget winwid)
-{
-	static GC gc = None;
-
-	if (gc == None) {
-		gc = XCreateGC(disp, winwid->win, 0, NULL);
-	}
-	XCopyArea(disp, winwid->bg_pmap_cache, winwid->bg_pmap, gc, 0, 0, winwid->w, winwid->h, 0, 0);
-
-	if (opt.caption_path)
-		feh_draw_caption(winwid);
-	if (opt.draw_filename)
-		feh_draw_filename(winwid);
-	if (opt.draw_actions)
-		feh_draw_actions(winwid);
-	if (opt.draw_info && opt.info_cmd)
-		feh_draw_info(winwid);
-	XSetWindowBackgroundPixmap(disp, winwid->win, winwid->bg_pmap);
-	XClearWindow(disp, winwid->win);
-}
 
 //void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 //{
