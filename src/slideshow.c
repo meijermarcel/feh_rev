@@ -481,8 +481,12 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 			//timeAfter -= timeNow;
 			//printf("load image time: %f\n", timeAfter);
 			//printf("render image %s\n",FEH_FILE(current_file->data)->filename);
-			int w = gib_imlib_image_get_width(winwid->im);
-			int h = gib_imlib_image_get_height(winwid->im);
+			//int w = gib_imlib_image_get_width(winwid->im);
+			//int h = gib_imlib_image_get_height(winwid->im);
+			int w = 500;
+			int h = 500;
+			winwid->w = w;
+			winwid->h = h;
 			if (feh_should_ignore_image(winwid->im)) {
 				//printf("ignored\n");
 				last = current_file;
@@ -493,8 +497,10 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 			if ((winwid->im_w != w) || (winwid->im_h != h))
 				winwid->had_resize = 1;
 			winwidget_reset_image(winwid);
-			winwid->im_w = w;
-			winwid->im_h = h;
+			//winwid->im_w = w;
+			//winwid->im_h = h;
+			winwid->im_w = 500;
+			winwid->im_h = 500;
 			//timeNow = feh_get_time();
 			if (index >= 0) {
 				winwidget_render_image(winwid, 1, 0);
