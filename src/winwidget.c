@@ -26,6 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "feh.h"
 #include "filelist.h"
+#include "timers.h"
 #include "winwidget.h"
 #include "options.h"
 #include "events.h"
