@@ -479,7 +479,7 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 		if (winwidget_loadimage(winwid, FEH_FILE(current_file->data))) {
 			double timeAfter = feh_get_time();
 			timeAfter -= timeNow;
-			printf("image time: %f\n", timeAfter);
+			printf("load image time: %f\n", timeAfter);
 			//printf("render image %s\n",FEH_FILE(current_file->data)->filename);
 			int w = gib_imlib_image_get_width(winwid->im);
 			int h = gib_imlib_image_get_height(winwid->im);
@@ -499,7 +499,9 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 				winwidget_render_image(winwid, 1, 0);
 				//printf("render this image %s\n", FEH_FILE(current_file->data)->filename);
 			}
-			
+			timeAfter = feh_get_time();
+			timeAfter -= timeNow;
+			printf("end image time: %f\n", timeAfter);
 			break;
 		}
 		else
