@@ -82,7 +82,7 @@ double feh_get_time(void)
 	struct timeval timev;
 
 	gettimeofday(&timev, NULL);
-	printf("SEC: %f MILLI: %f\n", (double)timev.tv_sec, ((double)timev.tv_usec) / 1000000));
+	printf("SECONDS: %f MILLI: %f\n", (double)timev.tv_sec, ((double)timev.tv_usec) / 1000000);
 	return((double) timev.tv_sec + (((double) timev.tv_usec) / 1000000));
 }
 
