@@ -502,7 +502,6 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 		sy = 0 - lround(winwid->im_y / winwid->zoom);
 	else
 		sy = 0;
-	double timeNow = feh_get_time();
 	
 	calc_w = lround(winwid->im_w * winwid->zoom);
 	calc_h = lround(winwid->im_h * winwid->zoom);
