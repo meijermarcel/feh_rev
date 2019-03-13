@@ -129,6 +129,7 @@ winwidget winwidget_create_from_file(gib_list * list, char type)
 			ret->full_screen = True;
 		winwidget_create_window(ret, ret->w, ret->h);
 		winwidget_render_image(ret, 1, 0);
+		printf("Render\n");
 	}
 
 	return(ret);
