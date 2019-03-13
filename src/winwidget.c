@@ -129,9 +129,9 @@ winwidget winwidget_create_from_file(gib_list * list, char type)
 			ret->full_screen = True;
 		winwidget_create_window(ret, ret->w, ret->h);
 		winwidget_render_image(ret, 1, 0);
-		printf("Render\n");
+		//printf("Render\n");
 	}
-	printf("Outside\n");
+	//printf("Outside\n");
 	return(ret);
 }
 
@@ -426,7 +426,7 @@ void winwidget_render_image(winwidget winwid, int resize, int force_alias)
 	int sx, sy, sw, sh, dx, dy, dw, dh;
 	int calc_w, calc_h;
 	int antialias = 0;
-	printf("Inside\n");
+	//printf("Inside\n");
 	if (!winwid->full_screen && resize) {
 		winwidget_resize(winwid, winwid->im_w, winwid->im_h, 0);
 		winwidget_reset_image(winwid);
