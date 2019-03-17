@@ -40,7 +40,6 @@ char *mode = NULL;
 
 int main(int argc, char **argv)
 {
-	//printf("Hello\n");
 	atexit(feh_clean_exit);
 
 	srandom(getpid() * time(NULL) % ((unsigned int) -1));
@@ -128,17 +127,6 @@ int feh_main_iteration(int block)
 	currentIndex = feh_get_pic_index(opt.interval,opt.pic_count);
 
 	if (currentIndex != prevIndex) {
-		//struct timeval tv;
-		//char buffer[30];
-		//time_t curtime;
-
-		//gettimeofday(&tv, NULL);
-		//curtime = tv.tv_sec;
-
-		//strftime(buffer, 30, "%m-%d-%Y  %T.", localtime(&curtime));
-		//printf("%s%ld\n", buffer, tv.tv_usec);
-		//change picture
-		//printf("prevIndex: %d currentIndex: %d\n",prevIndex,currentIndex);
 		slideshow_change_image_by_index(opt.w_data, currentIndex);
 	}
 

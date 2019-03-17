@@ -456,35 +456,16 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 	 * encounter invalid images.
 	 */
 	int our_filelist_len = filelist_len;
-	//printf("change image : %d\n", our_filelist_len);
 
 	/* The for loop prevents us looping infinitely */
 	for (i = 0; i < our_filelist_len; i++) {
 		winwidget_free_image(winwid);
 		current_file = feh_list_jump_to_pic(filelist, current_file, index);
-		//current_file = fileArray[8];
-		if (index == 0)
-		{
-			//printf("hello!!\n");
-		}
 		
-		
-		if (last) {
-			//filelist = feh_file_remove_from_list(filelist, last);
-			//last = NULL;
-			//printf("last thing\n");
-		}
-		
-		//double timeNow = feh_get_time();
 		if (winwidget_loadimage(winwid, FEH_FILE(current_file->data))) {
-			//double timeAfter = feh_get_time();
-			//timeAfter -= timeNow;
-			//printf("load image time: %f\n", timeAfter);
-			//printf("render image %s\n",FEH_FILE(current_file->data)->filename);
 			int w = gib_imlib_image_get_width(winwid->im);
 			int h = gib_imlib_image_get_height(winwid->im);
 			if (feh_should_ignore_image(winwid->im)) {
-				//printf("ignored\n");
 				last = current_file;
 				continue;
 			}
@@ -495,25 +476,17 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 			winwidget_reset_image(winwid);
 			winwid->im_w = w;
 			winwid->im_h = h;
-			//timeNow = feh_get_time();
 			if (index >= 0) {
 				winwidget_render_image(winwid, 1, 0);
-				//printf("render this image %s\n", FEH_FILE(current_file->data)->filename);
 			}
-			//timeAfter = feh_get_time();
-			//timeAfter -= timeNow;
-			//printf("end image time: %f\n", timeAfter);
 			break;
 		}
 		else
 		{
 			last = current_file;
-			//printf("didn't render\n");
 		}
 			
 	}
-	//if (last)
-	//	filelist = feh_file_remove_from_list(filelist, last);
 
 	if (filelist_len == 0)
 		eprintf("No more slides in show");
@@ -845,7 +818,6 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
   ret = root;
 
   for (int i = 0; i < index; i++) {
-    //printf("index: %d\n",i);
     if (ret->next) {
       ret = ret->next;
     }
@@ -858,18 +830,3 @@ gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
   return ret;
 }
 
-
-/*
-gib_list *feh_list_jump_to_pic(gib_list * root, gib_list * l, int index)
-{
-	gib_list *ret = NULL;
-	ret = fileArray[index];
-	if (index == 0)
-	{
-		ret = fileArray[0];
-		//printf("its zero\n");
-	}
-
-	return ret;
-}
-*/
