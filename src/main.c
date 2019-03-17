@@ -84,17 +84,17 @@ int main(int argc, char **argv)
 	}
 	
 	/* main event loop */
-	while (feh_main_iteration(1));
+	while (feh_main_iteration());
 
 	return(sig_exit);
 }
 
 /* Return 0 to stop iterating, 1 if ok to continue. */
-int feh_main_iteration(int block)
+int feh_main_iteration()
 {
 	static int first = 1;
 	static int xfd = 0;
-	static int fdsize = 0;
+	//static int fdsize = 0;
 	XEvent ev;
 	fd_set fdset;
 	static int currentIndex = -1;
@@ -106,7 +106,7 @@ int feh_main_iteration(int block)
 	if (first) {
 		/* Only need to set these up the first time */
 		xfd = ConnectionNumber(disp);
-		fdsize = xfd + 1;
+		//fdsize = xfd + 1;
 		prevIndex = opt.initial_index;
 		first = 0;
 		/*

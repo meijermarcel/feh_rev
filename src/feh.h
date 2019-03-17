@@ -123,7 +123,7 @@ enum slide_change { SLIDE_NEXT, SLIDE_PREV, SLIDE_RAND, SLIDE_FIRST, SLIDE_LAST,
 
 typedef void (*sighandler_t) (int);
 
-int feh_main_iteration(int block);
+int feh_main_iteration();
 void feh_handle_event(XEvent * ev);
 void init_imlib_fonts(void);
 void init_x_and_imlib(void);

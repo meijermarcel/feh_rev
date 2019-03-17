@@ -449,8 +449,6 @@ void slideshow_change_image(winwidget winwid, int change, int render)
 
 void slideshow_change_image_by_index(winwidget winwid, int index)
 {
-	gib_list *last = NULL;
-	gib_list *previous_file = current_file;
 	int i;
 	/* We can't use filelist_len in the for loop, since that changes when we
 	 * encounter invalid images.
@@ -466,7 +464,6 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 			int w = gib_imlib_image_get_width(winwid->im);
 			int h = gib_imlib_image_get_height(winwid->im);
 			if (feh_should_ignore_image(winwid->im)) {
-				last = current_file;
 				continue;
 			}
 			winwid->mode = MODE_NORMAL;
@@ -480,10 +477,6 @@ void slideshow_change_image_by_index(winwidget winwid, int index)
 				winwidget_render_image(winwid, 1, 0);
 			}
 			break;
-		}
-		else
-		{
-			last = current_file;
 		}
 			
 	}
