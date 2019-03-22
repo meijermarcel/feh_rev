@@ -57,6 +57,9 @@ int main(int argc, char **argv)
 
 	feh_event_init();
 
+	//imlib_set_cache_size(2048 * 1024);
+	imlib_set_cache_size(10240 * 1024);
+
 	
 	if (opt.index)
 		init_index_mode();

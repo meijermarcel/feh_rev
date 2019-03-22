@@ -104,8 +104,6 @@ void init_slideshow_mode(void)
 		opt.title = PACKAGE " [%u of %l] - %f";
 
 	gib_list *get_start = filelist;
-	//feh_file *file = NULL;
-	//int pic_time = 4 / opt.time_count;
 	int pic_count = 0;
 	for(; get_start; get_start = get_start->next){
 	  // find file to start at based on time intervals
